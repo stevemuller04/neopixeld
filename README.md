@@ -15,7 +15,7 @@ In order to run and use Neopixeld, you will need:
 First clone the Git repository (or download the contained files):
 
 ```shell
-$ git clone http://github.com/SteveMuller04/neopixeld.git
+$ git clone http://github.com/stevemuller04/neopixeld.git
 ```
 
 Then install the dependencies:
@@ -31,6 +31,23 @@ Finally, run the daemon:
 $ node app.js
 ```
 
+### Install as a service (systemd)
+
+If you wish to install Neopixeld as a service that automatically starts at boot,
+save the following in `/lib/systemd/system/neopixeld.service`:
+
+```
+[Unit]
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/node /home/pi/neopixeld/app.js
+```
+
+Make sure that the paths (here `/home/pi/neopixeld/app.js`) match your setting!
+
 ## Usage
 
 Neopixeld listens to HTTP requests of the form
@@ -40,7 +57,7 @@ POST /animate HTTP/1.0
 Content-Type: application/json;charset=utf-8
 
 [
-	{ duration: 0, pixels: { 0: 0xCCCCCC, 1: 0xEEEEEE, ... } }
+	{ "duration": 0, "pixels": { "0": 0xCCCCCC, "1": 0xEEEEEE, ... } }
 ]
 ```
 
@@ -59,16 +76,16 @@ An animation frame is represented by a JSON object that has two keys, `duration`
   The keys represent the indices (non-negative integers starting at 0) of the LEDs in the order they appear.
   The values represent the RGB value (expressed as a 32-bit integer) of the colour for the respective LED.
 
-It may be easier to express the colours in hexadecimal format (using `0x...`).
 Common RGB values are for instance `0x000000` for black, `0xFF0000` for red, `0x00FF00` for green, and `0x0000FF` for blue.
+However, note that in JSON, hexadecimal values are not supported, so you need to convert them to decimals.
 
 An example animation can be displayed using:
 
 ```json
 [
-	{ duration: 500, pixels: { 1: 0x0000FF } },
-	{ duration: 500, pixels: { 0: 0x0000FF, 1: 0x000000 } },
-	{ duration: 0, pixels: { 0: 0x000000 } },
+	{ "duration": 500, "pixels": { "1": 255 } },
+	{ "duration": 500, "pixels": { "0": 255, "1": 0 } },
+	{ "duration": 0, "pixels": { "0": 0 } },
 ]
 ```
 
@@ -79,7 +96,7 @@ After yet another 500ms, the second LED will turn off as well.
 When sent to the `animate+repeat` method, the animation will repeat indefinitely.
 That is, the two LEDs will alternate in 500ms intervals.
 
-# Multiple animations
+### Multiple animations
 
 It is to be noted that later animations will overwrite previous ones.
 More precisely, when an animation is pushed to the daemon, all LEDs used by that animation will be reserved
