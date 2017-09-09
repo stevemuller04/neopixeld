@@ -1,0 +1,21 @@
+{
+	"name": "neopixeld",
+	"version": "1.0.0",
+	"description": "Neopixeld is a simple daemon that allows remote entities to control an array of Neopixel LEDs via an HTTP API.",
+	"author": "Steve Muller <steve.muller@outlook.com>",
+	"main": "app.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/SteveMuller04/neopixeld"
+	},
+	"keywords": [
+		"neopixel",
+		"led",
+	],
+	"dependencies": {
+		"rpi-ws281x-native": "*",
+	},
+	"devDependencies": {
+	},
+	"license": "MIT"
+}
