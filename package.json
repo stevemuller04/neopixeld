@@ -10,10 +10,10 @@
 	},
 	"keywords": [
 		"neopixel",
-		"led",
+		"led"
 	],
 	"dependencies": {
-		"rpi-ws281x-native": "*",
+		"rpi-ws281x-native": "*"
 	},
 	"devDependencies": {
 	},
