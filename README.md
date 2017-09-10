@@ -7,8 +7,25 @@ Neopixeld is a simple daemon that allows remote entities to control an array of 
 In order to run and use Neopixeld, you will need:
 
 * A [Raspberry Pi](https://www.raspberrypi.org/) (any version)
-* An array or ring of [Neopixel](https://www.adafruit.com/category/168) LEDs (or compatible)
+* An array or ring of [Neopixel](https://www.adafruit.com/category/168) LEDs (or compatible to WS2812B)
 * [Node.js](https://nodejs.org/) and NPM (Node Package Manager)
+
+## Hardware set-up
+
+**Warning!** Do not connect the Neopixels directly to the 5V pin of your Raspberry Pi! It cannot handle the current, and may be damaged permanently.
+
+Use an external 5V DC power supply instead, which can handle the high currents.
+Note that each LED can consume up to 60 mA peak current.
+
+Set up the Neopixels as follows:
+
+* Connect the +5V of the external power supply to the 5V pin of each of the Neopixels.
+* Connect the GROUND of the external power supply to the GND pin of each of the Neopixels, and also to one of the GND pins of the Raspberry Pi.
+* Connect the GROUND of the external power supply to one of the GND pins of the Raspberry Pi.
+* Connect the DIN pin of the first Neopixel to one of the GPIOs of the Raspberry Pi (e.g. GPIO24 -- make sure to update the settings in `app.js` accordingly).
+* Connect the DOUT pin of each Neopixel to the DIN pin of the next Neopixel in row (except for the last one).
+
+<img alt="Hardware set-up" src="circuit.png" height="300">
 
 ## Installation
 
